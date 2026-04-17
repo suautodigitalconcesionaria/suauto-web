@@ -1,4 +1,6 @@
 import { getFeaturedCars } from "@/lib/airtable"
+
+export const dynamic = 'force-dynamic'
 import Hero from "@/components/Hero"
 import Stats from "@/components/Stats"
 import SearchBar from "@/components/SearchBar"

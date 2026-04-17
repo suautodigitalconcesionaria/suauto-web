@@ -62,7 +62,9 @@ async function fetchTable(tableName: string): Promise<AirtableRecord[]> {
     )
 
     if (!res.ok) {
-      console.error(`[Airtable] Error en tabla "${tableName}":`, await res.text())
+      const errText = await res.text()
+      console.error(`[Airtable] Error en tabla "${tableName}":`, errText)
+      // Si el campo Estado no existe en esta tabla, la saltamos sin romper el build
       break
     }
 
