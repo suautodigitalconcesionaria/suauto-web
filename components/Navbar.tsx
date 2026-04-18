@@ -48,11 +48,11 @@ export default function Navbar() {
           <Image
             src="/logo.png"
             alt="SuAuto"
-            width={36}
-            height={36}
+            width={44}
+            height={44}
             className="object-contain transition-opacity group-hover:opacity-80"
           />
-          <span className="text-2xl font-black tracking-tight text-white transition-opacity group-hover:opacity-80">
+          <span className="text-3xl font-black tracking-tight text-white transition-opacity group-hover:opacity-80">
             Su<span className="text-red-600">Auto</span>
           </span>
         </Link>
