@@ -107,7 +107,7 @@ export default function Importados() {
           >
             <div className="relative h-72 sm:h-96 lg:h-[460px] rounded-2xl overflow-hidden">
               <Image
-                src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=900&q=85"
+                src="/importados.webp"
                 alt="Auto importado premium"
                 fill
                 className="object-cover object-center"
