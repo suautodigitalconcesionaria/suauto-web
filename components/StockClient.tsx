@@ -1,10 +1,11 @@
 "use client"
 
-import { useState, useMemo, useEffect } from "react"
+import { useState, useMemo } from "react"
 import { useSearchParams } from "next/navigation"
-import { motion } from "framer-motion"
+import { motion, AnimatePresence } from "framer-motion"
 import { HiSearch } from "react-icons/hi"
-import { BsWhatsapp } from "react-icons/bs"
+import { BsWhatsapp, BsSliders } from "react-icons/bs"
+import { HiX } from "react-icons/hi"
 import type { Car } from "@/lib/cars"
 import { whatsappLink } from "@/lib/config"
 import CarCard from "./CarCard"
@@ -36,6 +37,7 @@ export default function StockClient({ cars }: Props) {
   const [transmission, setTransmission] = useState("Todos")
   const [type, setType] = useState("Todos")
   const [sortBy, setSortBy] = useState("default")
+  const [filtersOpen, setFiltersOpen] = useState(false)
 
   const filtered = useMemo(() => {
     let result = [...cars]
@@ -76,11 +78,13 @@ export default function StockClient({ cars }: Props) {
   return (
     <>
       {/* Filtros sticky */}
-      <div className="bg-[#0D0D0D] border-b border-white/5 sticky top-16 z-30 py-4">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="flex flex-col md:flex-row gap-3 flex-wrap">
+      <div className="bg-[#0D0D0D] border-b border-white/5 sticky top-16 z-30">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3">
+
+          {/* Fila principal: búsqueda + botón filtros (mobile) / todos los filtros (desktop) */}
+          <div className="flex gap-2">
             {/* Búsqueda */}
-            <div className="relative flex-1 min-w-48">
+            <div className="relative flex-1">
               <HiSearch className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-500" size={17} />
               <input
                 type="text"
@@ -91,36 +95,91 @@ export default function StockClient({ cars }: Props) {
               />
             </div>
 
-            {[
-              { value: type, setter: setType, options: TYPES, label: "Tipo" },
-              { value: category, setter: setCategory, options: CATEGORIES, label: "Categoría" },
-              { value: fuel, setter: setFuel, options: FUELS, label: "Combustible" },
-              { value: transmission, setter: setTransmission, options: TRANSMISSIONS, label: "Caja" },
-            ].map(({ value, setter, options, label }) => (
+            {/* Filtros desktop */}
+            <div className="hidden md:flex gap-2">
+              {[
+                { value: type, setter: setType, options: TYPES, label: "Tipo" },
+                { value: category, setter: setCategory, options: CATEGORIES, label: "Categoría" },
+                { value: fuel, setter: setFuel, options: FUELS, label: "Combustible" },
+                { value: transmission, setter: setTransmission, options: TRANSMISSIONS, label: "Caja" },
+              ].map(({ value, setter, options, label }) => (
+                <select
+                  key={label}
+                  value={value}
+                  onChange={e => setter(e.target.value)}
+                  className="bg-[#111111] border border-white/10 text-gray-300 rounded-xl px-3 py-2.5 outline-none text-sm cursor-pointer"
+                >
+                  {options.map(o => (
+                    <option key={o} value={o} className="bg-[#111111]">{o}</option>
+                  ))}
+                </select>
+              ))}
               <select
-                key={label}
-                value={value}
-                onChange={e => setter(e.target.value)}
+                value={sortBy}
+                onChange={e => setSortBy(e.target.value)}
                 className="bg-[#111111] border border-white/10 text-gray-300 rounded-xl px-3 py-2.5 outline-none text-sm cursor-pointer"
               >
-                {options.map(o => (
-                  <option key={o} value={o} className="bg-[#111111]">{o}</option>
-                ))}
+                <option value="default" className="bg-[#111111]">Ordenar</option>
+                <option value="price-asc" className="bg-[#111111]">Precio ↑</option>
+                <option value="price-desc" className="bg-[#111111]">Precio ↓</option>
+                <option value="year-desc" className="bg-[#111111]">Más nuevos</option>
+                <option value="km-asc" className="bg-[#111111]">Menos km</option>
               </select>
-            ))}
+            </div>
 
-            <select
-              value={sortBy}
-              onChange={e => setSortBy(e.target.value)}
-              className="bg-[#111111] border border-white/10 text-gray-300 rounded-xl px-3 py-2.5 outline-none text-sm cursor-pointer"
+            {/* Botón filtros mobile */}
+            <button
+              className="md:hidden flex items-center gap-2 bg-[#111111] border border-white/10 text-gray-300 rounded-xl px-4 py-2.5 text-sm font-medium"
+              onClick={() => setFiltersOpen(!filtersOpen)}
             >
-              <option value="default" className="bg-[#111111]">Ordenar</option>
-              <option value="price-asc" className="bg-[#111111]">Precio ↑</option>
-              <option value="price-desc" className="bg-[#111111]">Precio ↓</option>
-              <option value="year-desc" className="bg-[#111111]">Más nuevos</option>
-              <option value="km-asc" className="bg-[#111111]">Menos km</option>
-            </select>
+              {filtersOpen ? <HiX size={17} /> : <BsSliders size={15} />}
+              Filtros
+            </button>
           </div>
+
+          {/* Panel filtros mobile colapsable */}
+          <AnimatePresence>
+            {filtersOpen && (
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: "auto", opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.2 }}
+                className="overflow-hidden md:hidden"
+              >
+                <div className="grid grid-cols-2 gap-2 pt-3">
+                  {[
+                    { value: type, setter: setType, options: TYPES, label: "Tipo" },
+                    { value: category, setter: setCategory, options: CATEGORIES, label: "Categoría" },
+                    { value: fuel, setter: setFuel, options: FUELS, label: "Combustible" },
+                    { value: transmission, setter: setTransmission, options: TRANSMISSIONS, label: "Caja" },
+                  ].map(({ value, setter, options, label }) => (
+                    <select
+                      key={label}
+                      value={value}
+                      onChange={e => setter(e.target.value)}
+                      className="bg-[#111111] border border-white/10 text-gray-300 rounded-xl px-3 py-2.5 outline-none text-sm cursor-pointer"
+                    >
+                      {options.map(o => (
+                        <option key={o} value={o} className="bg-[#111111]">{o}</option>
+                      ))}
+                    </select>
+                  ))}
+                  <select
+                    value={sortBy}
+                    onChange={e => setSortBy(e.target.value)}
+                    className="col-span-2 bg-[#111111] border border-white/10 text-gray-300 rounded-xl px-3 py-2.5 outline-none text-sm cursor-pointer"
+                  >
+                    <option value="default" className="bg-[#111111]">Ordenar</option>
+                    <option value="price-asc" className="bg-[#111111]">Precio ↑</option>
+                    <option value="price-desc" className="bg-[#111111]">Precio ↓</option>
+                    <option value="year-desc" className="bg-[#111111]">Más nuevos</option>
+                    <option value="km-asc" className="bg-[#111111]">Menos km</option>
+                  </select>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </div>
 

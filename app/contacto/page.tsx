@@ -134,21 +134,15 @@ export default function ContactoPage() {
           className="rounded-2xl overflow-hidden border border-white/5 mb-14"
           initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={viewportConfig}
         >
-          <div className="bg-[#111111] h-72 flex flex-col items-center justify-center gap-4">
-            <BsGeoAlt className="text-red-500" size={40} />
-            <div className="text-center">
-              <p className="text-white font-bold mb-1">General Pico, La Pampa</p>
-              <p className="text-gray-500 text-sm mb-2">
-                Reemplazá este bloque con el embed de Google Maps
-              </p>
-              <a
-                href="https://maps.google.com" target="_blank" rel="noopener noreferrer"
-                className="text-red-500 text-sm font-medium hover:underline inline-flex items-center gap-1"
-              >
-                Ver en Google Maps <HiArrowRight size={12} />
-              </a>
-            </div>
-          </div>
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3000!2d-63.7517!3d-35.6585!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95c37d210d92da07%3A0x757112968500ae90!2sSu%20Auto!5e0!3m2!1ses-419!2sar!4v1776519527882!5m2!1ses-419!2sar"
+            width="100%"
+            height="420"
+            style={{ border: 0 }}
+            allowFullScreen
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+          />
         </motion.div>
 
         {/* ── Sección Redes Sociales ── */}

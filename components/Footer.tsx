@@ -26,15 +26,6 @@ export default function Footer() {
               Tu concesionaria de confianza en General Pico.
               Autos usados, financiación y autos importados a pedido.
             </p>
-            <a
-              href={whatsappLink()}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 bg-green-500/15 hover:bg-green-500/25 border border-green-500/30 text-green-400 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all"
-            >
-              <BsWhatsapp size={16} />
-              Hablame por WhatsApp
-            </a>
           </div>
 
           {/* Navigation */}
