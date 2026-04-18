@@ -186,41 +186,6 @@ function CalculadoraPrendaria() {
         ))}
       </div>
 
-      {/* Máximos a financiar */}
-      <div className="bg-[#111111] border border-white/5 rounded-2xl overflow-hidden">
-        <div className="bg-red-700 px-5 py-3">
-          <p className="text-white font-black tracking-wide uppercase text-sm">Máximos a financiar</p>
-        </div>
-        <div className="p-4">
-          {/* Header */}
-          <div className="grid grid-cols-3 gap-2 mb-2 px-2">
-            <p className="text-gray-500 text-xs font-semibold uppercase tracking-wider">Modelos</p>
-            <p className="text-gray-500 text-xs font-semibold uppercase tracking-wider">Valor del auto</p>
-            <p className="text-gray-500 text-xs font-semibold uppercase tracking-wider">Máximo a financiar</p>
-          </div>
-          <div className="space-y-2">
-            {MAXIMOS.map((row, i) => (
-              <div key={i} className="grid grid-cols-3 gap-2 items-center bg-black/30 rounded-xl px-3 py-2.5 border border-white/5">
-                <p className="text-white text-sm font-semibold">{row.modelos}</p>
-                <input
-                  type="number"
-                  placeholder="Ingrese valor"
-                  value={valoresMax[i]}
-                  onChange={(e) => setValoresMax({ ...valoresMax, [i]: e.target.value })}
-                  className="bg-black/40 border border-white/10 focus:border-red-600/50 text-white placeholder-gray-600 rounded-lg px-3 py-2 outline-none text-sm transition-colors w-full"
-                />
-                <p className={`text-sm font-bold ${valoresMax[i] ? "text-red-400" : "text-gray-600"}`}>
-                  {maximo(i)}
-                </p>
-              </div>
-            ))}
-          </div>
-          <p className="text-gray-600 text-xs mt-3 px-1">
-            Porcentajes: 2026–2021: 60% · 2020–2016: 60% · 2015–2013: 55%
-          </p>
-        </div>
-      </div>
-
       {/* CTA WhatsApp */}
       <a
         href={whatsappLink(whatsappMsg())}
@@ -270,12 +235,12 @@ export default function FinanciacionPage() {
         </div>
       </div>
 
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-14">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-14">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-12 items-start">
 
           {/* Columna izquierda: info */}
           <motion.div
-            className="lg:col-span-1"
+            className="lg:col-span-1 lg:sticky lg:top-24"
             variants={staggerContainer} initial="hidden" animate="visible"
           >
             <motion.div variants={fadeInUp} className="mb-8">
@@ -312,7 +277,7 @@ export default function FinanciacionPage() {
 
           {/* Columna derecha: calculadora */}
           <motion.div
-            className="lg:col-span-2"
+            className="lg:col-span-3"
             initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
           >
             <CalculadoraPrendaria />
