@@ -105,15 +105,14 @@ export default function Importados() {
             viewport={viewportConfig}
             className="relative"
           >
-            <div className="relative h-72 sm:h-96 lg:h-[460px] rounded-2xl overflow-hidden">
-              <Image
+            <div className="relative">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
                 src="/importados.webp"
                 alt="Auto importado premium"
-                fill
-                className="object-cover object-center"
-                sizes="(max-width: 1024px) 100vw, 50vw"
+                className="rounded-3xl w-full"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent rounded-3xl" />
 
               {/* Floating card */}
               <motion.div
