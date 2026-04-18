@@ -50,9 +50,9 @@ export default function Navbar() {
             alt="SuAuto"
             width={44}
             height={44}
-            className="object-contain transition-opacity group-hover:opacity-80"
+            className="object-contain transition-opacity group-hover:opacity-80 block"
           />
-          <span className="text-3xl font-black tracking-tight text-white transition-opacity group-hover:opacity-80">
+          <span className="text-3xl font-black tracking-tight text-white transition-opacity group-hover:opacity-80 leading-none">
             Su<span className="text-red-600">Auto</span>
           </span>
         </Link>
