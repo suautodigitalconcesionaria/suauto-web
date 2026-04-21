@@ -10,46 +10,25 @@ import { fadeInUp, staggerContainer, viewportConfig } from "@/lib/animations"
 
 const LINEAS = [
   {
-    titulo: "2026 / 2016",
+    titulo: "2026 / 2013",
     cuotas: [
-      { plazo: 12, coef: 126.97 },
-      { plazo: 15, coef: 110.90 },
-      { plazo: 18, coef: 100.56 },
-      { plazo: 24, coef:  86.86 },
-      { plazo: 30, coef:  80.24 },
-      { plazo: 36, coef:  76.36 },
-      { plazo: 48, coef:  72.44 },
-    ],
-  },
-  {
-    titulo: "2015 / 2013",
-    cuotas: [
-      { plazo: 12, coef: 137.35 },
-      { plazo: 15, coef: 121.66 },
-      { plazo: 18, coef: 108.32 },
-      { plazo: 24, coef:  94.71 },
-      { plazo: 30, coef:  88.54 },
-      { plazo: 36, coef:  85.05 },
+      { plazo: 12, coef: 132.08 },
+      { plazo: 18, coef: 112.00 },
+      { plazo: 24, coef:  89.08 },
+      { plazo: 36, coef:  71.90 },
+      { plazo: 48, coef:  69.90 },
     ],
   },
   {
     titulo: "UVA — 0KM / 2016",
     cuotas: [
-      { plazo: 12, coef: 115.03 },
-      { plazo: 15, coef:  98.60 },
-      { plazo: 18, coef:  87.86 },
-      { plazo: 24, coef:  74.92 },
-      { plazo: 30, coef:  67.63 },
-      { plazo: 36, coef:  63.13 },
-      { plazo: 48, coef:  58.23 },
+      { plazo: 12, coef: 104.06 },
+      { plazo: 18, coef:  74.46 },
+      { plazo: 24, coef:  60.79 },
+      { plazo: 36, coef:  47.54 },
+      { plazo: 48, coef:  41.33 },
     ],
   },
-]
-
-const MAXIMOS = [
-  { modelos: "2026 al 2021", porcentaje: 0.60 },
-  { modelos: "2020 al 2016", porcentaje: 0.60 },
-  { modelos: "2015 al 2013", porcentaje: 0.55 },
 ]
 
 const benefits = [
@@ -61,7 +40,7 @@ const benefits = [
   "Posibilidad de tomar tu auto como parte de pago",
 ]
 
-const banks = ["Banco Nación", "Banco Provincia", "Santander", "BBVA", "Macro", "Galicia", "Credicuotas"]
+const banks = ["Santander", "Nacion", "MG Group", "Carfacil", "Decreditos", "Creditos uba", "Financiacion de cada marca"]
 
 // ─── Formateador ───────────────────────────────────────────────────────────────
 
@@ -71,19 +50,12 @@ const fmt = (n: number) =>
 // ─── Calculadora prendaria ─────────────────────────────────────────────────────
 
 function CalculadoraPrendaria() {
-  const [montos, setMontos] = useState<Record<number, string>>({ 0: "", 1: "", 2: "" })
-  const [valoresMax, setValoresMax] = useState<Record<number, string>>({ 0: "", 1: "", 2: "" })
+  const [montos, setMontos] = useState<Record<number, string>>({ 0: "", 1: "" })
 
   const cuota = (linea: number, coef: number) => {
     const m = parseFloat(montos[linea]?.replace(/\./g, "").replace(",", ".") || "0")
     if (!m || isNaN(m)) return "-"
     return fmt((m / 1000) * coef)
-  }
-
-  const maximo = (idx: number) => {
-    const v = parseFloat(valoresMax[idx]?.replace(/\./g, "").replace(",", ".") || "0")
-    if (!v || isNaN(v)) return "-"
-    return fmt(v * MAXIMOS[idx].porcentaje)
   }
 
   const whatsappMsg = () => {
@@ -98,31 +70,16 @@ function CalculadoraPrendaria() {
   return (
     <div className="space-y-6">
 
-      {/* Aviso plazo 48 meses */}
-      <div className="flex items-start gap-2.5 bg-blue-500/10 border border-blue-500/20 rounded-xl px-4 py-3">
-        <BsInfoCircle className="text-blue-400 mt-0.5 flex-shrink-0" size={15} />
-        <p className="text-blue-300 text-sm font-medium">
-          Solo en modelos 2026/2021 se extiende el plazo a 48 meses
+      {/* Aviso porcentaje */}
+      <div className="flex items-start gap-2.5 bg-red-600/10 border border-red-600/20 rounded-xl px-4 py-3">
+        <BsInfoCircle className="text-red-400 mt-0.5 flex-shrink-0" size={15} />
+        <p className="text-red-300 text-sm font-medium">
+          Modelos año 2026 a 2013 — financiación del <strong>50% al 70%</strong> del valor del vehículo
         </p>
       </div>
 
-      {/* Porcentajes de financiación */}
-      <div className="grid grid-cols-3 gap-2 text-center">
-        {[
-          { label: "2026–2021", pct: "60%" },
-          { label: "2020–2016", pct: "60%" },
-          { label: "2015–2013", pct: "55%" },
-        ].map((item) => (
-          <div key={item.label} className="bg-[#111] border border-white/5 rounded-xl p-3">
-            <p className="text-gray-500 text-xs mb-1">{item.label}</p>
-            <p className="text-red-400 font-black text-xl">{item.pct}</p>
-            <p className="text-gray-600 text-xs">de financiación</p>
-          </div>
-        ))}
-      </div>
-
-      {/* Tres líneas de crédito */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      {/* Dos líneas de crédito */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {LINEAS.map((linea, li) => (
           <div key={li} className="bg-[#111111] border border-white/5 rounded-2xl overflow-hidden">
             {/* Header */}
@@ -150,7 +107,7 @@ function CalculadoraPrendaria() {
                 {/* Header tabla */}
                 <div className="bg-red-600/80 px-2 py-1.5 text-white font-bold text-center rounded-tl-lg">PLAZO</div>
                 <div className="bg-red-600/80 px-2 py-1.5 text-white font-bold text-center">COEF/$1000</div>
-                <div className="bg-red-600/80 px-2 py-1.5 text-white font-bold text-center rounded-tr-lg">CUOTA</div>
+                <div className="bg-red-600/80 px-2 py-1.5 text-white font-bold text-center rounded-tr-lg">CUOTA PROM.</div>
 
                 {linea.cuotas.map((row, ri) => (
                   <>
@@ -158,13 +115,13 @@ function CalculadoraPrendaria() {
                       key={`p${ri}`}
                       className={`px-2 py-2 text-center font-semibold border-b border-white/5 ${
                         montos[li] && !isNaN(parseFloat(montos[li])) ? "text-white" : "text-gray-500"
-                      } ${ri % 2 === 0 ? "bg-white/2" : ""}`}
+                      } ${ri % 2 === 0 ? "bg-white/[0.02]" : ""}`}
                     >
                       {row.plazo}
                     </div>
                     <div
                       key={`c${ri}`}
-                      className={`px-2 py-2 text-center border-b border-white/5 text-gray-400 ${ri % 2 === 0 ? "bg-white/2" : ""}`}
+                      className={`px-2 py-2 text-center border-b border-white/5 text-gray-400 ${ri % 2 === 0 ? "bg-white/[0.02]" : ""}`}
                     >
                       {row.coef.toFixed(2)}
                     </div>
@@ -174,7 +131,7 @@ function CalculadoraPrendaria() {
                         montos[li] && !isNaN(parseFloat(montos[li]))
                           ? "text-red-400"
                           : "text-gray-600"
-                      } ${ri % 2 === 0 ? "bg-white/2" : ""}`}
+                      } ${ri % 2 === 0 ? "bg-white/[0.02]" : ""}`}
                     >
                       {cuota(li, row.coef)}
                     </div>
@@ -184,6 +141,14 @@ function CalculadoraPrendaria() {
             </div>
           </div>
         ))}
+      </div>
+
+      {/* Tope máximo */}
+      <div className="bg-[#111111] border border-white/5 rounded-xl px-4 py-3 text-center">
+        <p className="text-gray-400 text-xs font-medium">
+          <span className="text-white font-bold">Máximos a financiar:</span> hasta el 70% del valor de Infoauto o un tope de{" "}
+          <span className="text-red-400 font-bold">$55.000.000</span> — antigüedad no mayor a 13 años
+        </p>
       </div>
 
       {/* CTA WhatsApp */}

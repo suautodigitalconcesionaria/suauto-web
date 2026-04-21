@@ -109,7 +109,8 @@ export default function StockClient({ cars }: Props) {
                   onChange={e => setter(e.target.value)}
                   className="bg-[#111111] border border-white/10 text-gray-300 rounded-xl px-3 py-2.5 outline-none text-sm cursor-pointer"
                 >
-                  {options.map(o => (
+                  <option value="Todos" className="bg-[#111111]">{label}</option>
+                  {options.filter(o => o !== "Todos").map(o => (
                     <option key={o} value={o} className="bg-[#111111]">{o}</option>
                   ))}
                 </select>
@@ -160,7 +161,8 @@ export default function StockClient({ cars }: Props) {
                       onChange={e => setter(e.target.value)}
                       className="bg-[#111111] border border-white/10 text-gray-300 rounded-xl px-3 py-2.5 outline-none text-sm cursor-pointer"
                     >
-                      {options.map(o => (
+                      <option value="Todos" className="bg-[#111111]">{label}</option>
+                      {options.filter(o => o !== "Todos").map(o => (
                         <option key={o} value={o} className="bg-[#111111]">{o}</option>
                       ))}
                     </select>
