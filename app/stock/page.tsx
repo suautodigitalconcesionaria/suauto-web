@@ -2,6 +2,7 @@ import { getAllCars } from "@/lib/airtable"
 import StockClient from "@/components/StockClient"
 
 export const dynamic = 'force-dynamic'
+export const runtime = 'edge'
 
 export default async function StockPage() {
   const cars = await getAllCars()

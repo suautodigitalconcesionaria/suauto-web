@@ -2,6 +2,7 @@ import { getFeaturedCars } from "@/lib/airtable"
 import dynamicImport from "next/dynamic"
 
 export const dynamic = 'force-dynamic'
+export const runtime = 'edge'
 import Hero from "@/components/Hero"
 import Stats from "@/components/Stats"
 import SearchBar from "@/components/SearchBar"
