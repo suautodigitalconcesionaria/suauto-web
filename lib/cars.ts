@@ -11,7 +11,7 @@ export interface Car {
   transmission: "Manual" | "Automático"
   color: string
   doors: number
-  category: "sedan" | "suv" | "pickup" | "hatchback" | "coupe"
+  category: string
   images: string[]
   featured: boolean
   description: string

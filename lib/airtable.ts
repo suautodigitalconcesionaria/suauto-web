@@ -93,15 +93,8 @@ function normalizeTransmission(val?: string): Car['transmission'] {
   return val.toLowerCase().includes('auto') ? 'Automático' : 'Manual'
 }
 
-function normalizeCategory(cat?: string): Car['category'] {
-  if (!cat) return 'sedan'
-  const v = cat.toLowerCase().trim()
-  if (v.includes('pickup') || v.includes('camioneta')) return 'pickup'
-  if (v.includes('suv') || v.includes('crossover')) return 'suv'
-  if (v.includes('hatch')) return 'hatchback'
-  if (v.includes('sedan') || v.includes('sedán')) return 'sedan'
-  // Si no coincide con ninguno, devolver el valor tal cual (minúsculas)
-  return v as Car['category']
+function normalizeCategory(cat?: string): string {
+  return cat?.trim() ?? ''
 }
 
 // ─── Mapeo de registro a Car ──────────────────────────────────────────────────
