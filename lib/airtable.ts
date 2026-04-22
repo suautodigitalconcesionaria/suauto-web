@@ -57,7 +57,7 @@ async function fetchTable(tableName: string): Promise<AirtableRecord[]> {
       `https://api.airtable.com/v0/${BASE}/${encodeURIComponent(tableName)}?${params}`,
       {
         headers: { Authorization: `Bearer ${TOKEN}` },
-        next: { revalidate: 300 }, // refresca cada 5 minutos
+        cache: 'no-store',
       }
     )
 
@@ -156,7 +156,7 @@ export async function getCarById(id: string): Promise<Car | null> {
       `https://api.airtable.com/v0/${BASE}/${encodeURIComponent(table)}/${id}`,
       {
         headers: { Authorization: `Bearer ${TOKEN}` },
-        next: { revalidate: 300 },
+        cache: 'no-store',
       }
     )
     if (res.ok) {
