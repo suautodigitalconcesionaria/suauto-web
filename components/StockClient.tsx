@@ -39,7 +39,7 @@ export default function StockClient({ cars }: Props) {
 
   // Opciones dinámicas según los datos reales de Airtable
   const CATEGORIES = useMemo(() => {
-    const vals = [...new Set(cars.map(c => c.category).filter(Boolean))]
+    const vals = Array.from(new Set(cars.map(c => c.category).filter(Boolean)))
     const labelMap: Record<string, string> = {
       sedan: "Sedán", pickup: "Pickup", suv: "SUV", hatchback: "Hatchback",
     }
@@ -47,7 +47,7 @@ export default function StockClient({ cars }: Props) {
   }, [cars])
 
   const FUELS = useMemo(() => {
-    const vals = [...new Set(cars.map(c => c.fuel).filter(Boolean))]
+    const vals = Array.from(new Set(cars.map(c => c.fuel).filter(Boolean)))
     return ["Todos", ...vals]
   }, [cars])
 
