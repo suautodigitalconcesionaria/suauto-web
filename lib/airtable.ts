@@ -1,7 +1,7 @@
 import type { Car } from './cars'
 
-const TOKEN = process.env.AIRTABLE_TOKEN!
-const BASE = process.env.AIRTABLE_BASE_ID!
+const getToken = () => process.env.AIRTABLE_TOKEN!
+const getBase = () => process.env.AIRTABLE_BASE_ID!
 
 // ─── Tipos internos de Airtable ───────────────────────────────────────────────
 
@@ -54,9 +54,9 @@ async function fetchTable(tableName: string): Promise<AirtableRecord[]> {
     if (offset) params.set('offset', offset)
 
     const res = await fetch(
-      `https://api.airtable.com/v0/${BASE}/${encodeURIComponent(tableName)}?${params}`,
+      `https://api.airtable.com/v0/${getBase()}/${encodeURIComponent(tableName)}?${params}`,
       {
-        headers: { Authorization: `Bearer ${TOKEN}` },
+        headers: { Authorization: `Bearer ${getToken()}` },
         cache: 'no-store',
       }
     )
@@ -153,9 +153,9 @@ export async function getCarById(id: string): Promise<Car | null> {
     ['Stock', 'stock'],
   ] as const) {
     const res = await fetch(
-      `https://api.airtable.com/v0/${BASE}/${encodeURIComponent(table)}/${id}`,
+      `https://api.airtable.com/v0/${getBase()}/${encodeURIComponent(table)}/${id}`,
       {
-        headers: { Authorization: `Bearer ${TOKEN}` },
+        headers: { Authorization: `Bearer ${getToken()}` },
         cache: 'no-store',
       }
     )
