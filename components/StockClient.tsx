@@ -11,8 +11,6 @@ import { whatsappLink } from "@/lib/config"
 import CarCard from "./CarCard"
 import { staggerContainer, viewportConfig } from "@/lib/animations"
 
-const CATEGORIES = ["Todos", "Pickup", "SUV", "Sedán", "Hatchback"]
-const FUELS = ["Todos", "Nafta", "Diesel", "GNC"]
 const TRANSMISSIONS = ["Todos", "Manual", "Automático"]
 const TYPES = ["Todos", "Usado", "Nuevo"]
 
@@ -38,6 +36,20 @@ export default function StockClient({ cars }: Props) {
   const [type, setType] = useState("Todos")
   const [sortBy, setSortBy] = useState("default")
   const [filtersOpen, setFiltersOpen] = useState(false)
+
+  // Opciones dinámicas según los datos reales de Airtable
+  const CATEGORIES = useMemo(() => {
+    const vals = [...new Set(cars.map(c => c.category).filter(Boolean))]
+    const labelMap: Record<string, string> = {
+      sedan: "Sedán", pickup: "Pickup", suv: "SUV", hatchback: "Hatchback",
+    }
+    return ["Todos", ...vals.map(v => labelMap[v] ?? v)]
+  }, [cars])
+
+  const FUELS = useMemo(() => {
+    const vals = [...new Set(cars.map(c => c.fuel).filter(Boolean))]
+    return ["Todos", ...vals]
+  }, [cars])
 
   const filtered = useMemo(() => {
     let result = [...cars]
