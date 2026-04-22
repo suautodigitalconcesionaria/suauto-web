@@ -93,12 +93,15 @@ function normalizeTransmission(val?: string): Car['transmission'] {
   return val.toLowerCase().includes('auto') ? 'Automático' : 'Manual'
 }
 
-function normalizeCategory(cat?: string, model?: string): Car['category'] {
-  const source = (cat ?? model ?? '').toLowerCase()
-  if (['hilux', 'ranger', 'amarok', 'frontier', 's10', 'l200', 'maverick', 'kangoo', 'pickup'].some(p => source.includes(p))) return 'pickup'
-  if (['sw4', 'renegade', 'duster', 't-cross', 'captur', 'koleos', 'stepway', 'suran', 'suv', 'crossover'].some(p => source.includes(p))) return 'suv'
-  if (['clio', 'gol', 'polo', 'etios', '208', '207', 'onix', 'corsa', 'fiesta', 'sandero', 'hatch'].some(p => source.includes(p))) return 'hatchback'
-  return 'sedan'
+function normalizeCategory(cat?: string): Car['category'] {
+  if (!cat) return 'sedan'
+  const v = cat.toLowerCase().trim()
+  if (v.includes('pickup') || v.includes('camioneta')) return 'pickup'
+  if (v.includes('suv') || v.includes('crossover')) return 'suv'
+  if (v.includes('hatch')) return 'hatchback'
+  if (v.includes('sedan') || v.includes('sedán')) return 'sedan'
+  // Si no coincide con ninguno, devolver el valor tal cual (minúsculas)
+  return v as Car['category']
 }
 
 // ─── Mapeo de registro a Car ──────────────────────────────────────────────────
@@ -120,7 +123,7 @@ function mapRecord(record: AirtableRecord, type: 'usado' | 'nuevo' | 'stock'): C
     transmission: normalizeTransmission(f.Transmision),
     color: f.Color ?? '',
     doors: 4,
-    category: normalizeCategory(f.Categoria, f.Modelo),
+    category: normalizeCategory(f.Categoria),
     images: images.length > 0 ? images : ['https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=800&q=80'],
     featured: f.Destacado ?? false,
     description: f.Descripcion ?? '',
