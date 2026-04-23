@@ -49,7 +49,7 @@ async function fetchTable(tableName: string): Promise<AirtableRecord[]> {
 
   do {
     const params = new URLSearchParams({
-      filterByFormula: '{Estado}="disponible"',
+      filterByFormula: 'OR({Estado}="disponible",{Estado}="vendido")',
     })
     if (offset) params.set('offset', offset)
 

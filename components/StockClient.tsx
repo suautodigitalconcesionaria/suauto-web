@@ -49,7 +49,12 @@ export default function StockClient({ cars }: Props) {
   }, [cars])
 
   const filtered = useMemo(() => {
-    let result = [...cars]
+    const disponibles = cars.filter(c => c.status !== "vendido")
+    const vendidos = cars.filter(c => c.status === "vendido")
+
+    const hasFilters = query || category !== "Todos" || fuel !== "Todos" || transmission !== "Todos" || type !== "Todos"
+
+    let result = [...disponibles]
 
     if (query) {
       const q = query.toLowerCase()
@@ -61,10 +66,7 @@ export default function StockClient({ cars }: Props) {
       )
     }
 
-    if (category !== "Todos") {
-      result = result.filter(c => c.category === category)
-    }
-
+    if (category !== "Todos") result = result.filter(c => c.category === category)
     if (fuel !== "Todos") result = result.filter(c => c.fuel === fuel)
     if (transmission !== "Todos") result = result.filter(c => c.transmission === transmission)
 
@@ -77,6 +79,9 @@ export default function StockClient({ cars }: Props) {
     if (sortBy === "price-desc") result.sort((a, b) => b.price - a.price)
     if (sortBy === "year-desc") result.sort((a, b) => b.year - a.year)
     if (sortBy === "km-asc") result.sort((a, b) => a.km - b.km)
+
+    // Vendidos al final, solo cuando no hay filtros activos
+    if (!hasFilters) result = [...result, ...vendidos]
 
     return result
   }, [cars, query, category, fuel, transmission, type, sortBy])
