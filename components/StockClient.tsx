@@ -22,16 +22,6 @@ export default function StockClient({ cars }: Props) {
   const searchParams = useSearchParams()
 
   const [query, setQuery] = useState(searchParams.get("q") ?? "")
-  const [category, setCategory] = useState(() => {
-    const cat = searchParams.get("cat")
-    if (!cat) return "Todos"
-    return CATEGORIES.find(c => c.toLowerCase() === cat.toLowerCase()) ?? "Todos"
-  })
-  const [fuel, setFuel] = useState(() => {
-    const f = searchParams.get("fuel")
-    if (!f) return "Todos"
-    return FUELS.find(fu => fu.toLowerCase() === f.toLowerCase()) ?? "Todos"
-  })
   const [transmission, setTransmission] = useState("Todos")
   const [type, setType] = useState("Todos")
   const [sortBy, setSortBy] = useState("default")
@@ -47,6 +37,18 @@ export default function StockClient({ cars }: Props) {
     const vals = Array.from(new Set(cars.map(c => c.fuel).filter(Boolean)))
     return ["Todos", ...vals]
   }, [cars])
+
+  // Inicialización de filtros desde URL — después de que CATEGORIES/FUELS estén disponibles
+  const [category, setCategory] = useState(() => {
+    const cat = searchParams.get("cat")
+    if (!cat) return "Todos"
+    return cat
+  })
+  const [fuel, setFuel] = useState(() => {
+    const f = searchParams.get("fuel")
+    if (!f) return "Todos"
+    return f
+  })
 
   const filtered = useMemo(() => {
     const disponibles = cars.filter(c => c.status !== "vendido")
