@@ -16,6 +16,11 @@ export const metadata: Metadata = {
   description:
     "Concesionaria de autos en General Pico, La Pampa. Autos usados, financiación y autos importados a pedido. Contactanos por WhatsApp.",
   keywords: "autos usados, concesionaria, General Pico, La Pampa, financiación, importados, pickup, suv",
+  icons: {
+    icon: "/logo.png",
+    shortcut: "/logo.png",
+    apple: "/logo.png",
+  },
   openGraph: {
     title: "SuAuto | Autos en General Pico",
     description: "Autos usados, financiación y autos importados a pedido. Atención inmediata por WhatsApp.",
