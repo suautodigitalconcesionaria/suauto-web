@@ -29,7 +29,8 @@ export default function CarCard({ car }: Props) {
           src={car.images[0]}
           alt={`${car.brand} ${car.model}`}
           fill
-          className={`object-cover transition-transform duration-500 group-hover:scale-105 ${isSold ? "grayscale opacity-60" : ""}`}
+          className={`object-cover object-center transition-transform duration-500 group-hover:scale-105 ${isSold ? "grayscale opacity-60" : ""}`}
+          style={{ objectPosition: "center 60%" }}
           sizes="(max-width: 768px) 100vw, 33vw"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-[#111111] via-transparent to-transparent" />
