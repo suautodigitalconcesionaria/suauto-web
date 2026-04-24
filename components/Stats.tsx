@@ -7,7 +7,7 @@ import { staggerContainer, fadeInUp, viewportConfig } from "@/lib/animations"
 const stats = [
   { value: 500, suffix: "+", label: "Autos vendidos", description: "en todo el país" },
   { value: 45, suffix: "", label: "En stock ahora", description: "listos para entregar" },
-  { value: 8, suffix: "", label: "Años en el mercado", description: "de experiencia real" },
+  { value: 20, suffix: "", label: "Años en el mercado", description: "de experiencia real" },
   { value: 4.9, suffix: "★", label: "Rating de clientes", description: "en Google" },
 ]
 
