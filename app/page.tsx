@@ -1,4 +1,4 @@
-import { getFeaturedCars } from "@/lib/airtable"
+import { getAllCars } from "@/lib/airtable"
 import dynamicImport from "next/dynamic"
 
 export const dynamic = 'force-dynamic'
@@ -17,13 +17,14 @@ const ArgentinaMap = dynamicImport(() => import("@/components/ArgentinaMap"), { 
 export const revalidate = 300
 
 export default async function HomePage() {
-  const featuredCars = await getFeaturedCars()
+  const allCars = await getAllCars()
+  const featuredCars = allCars.filter(c => c.featured)
 
   return (
     <>
       <Hero />
       <Stats />
-      <SearchBar />
+      <SearchBar cars={allCars} />
       <FeaturedCars cars={featuredCars} />
       <WhyUs />
       <Importados />
