@@ -73,7 +73,7 @@ export default function LoadingScreen() {
       </div>
 
       {/* Escena */}
-      <div style={{ position: "relative", width: "min(560px, 90vw)", height: 220 }}>
+      <div style={{ position: "relative", width: "min(560px, 90vw)", height: 160 }}>
 
         {/* Líneas de velocidad */}
         {([
@@ -99,7 +99,7 @@ export default function LoadingScreen() {
         {[0, 1, 2, 3].map((i) => (
           <div key={i} style={{
             position: "absolute",
-            right: 48, top: 125,
+            right: 48, top: 90,
             width: 10, height: 10,
             borderRadius: "50%",
             background: "rgba(160,160,160,0.5)",
