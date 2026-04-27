@@ -73,7 +73,7 @@ export default function LoadingScreen() {
       </div>
 
       {/* Escena */}
-      <div style={{ position: "relative", width: 420, height: 180 }}>
+      <div style={{ position: "relative", width: "min(560px, 90vw)", height: 220 }}>
 
         {/* Líneas de velocidad */}
         {([
@@ -126,11 +126,10 @@ export default function LoadingScreen() {
             src="/car-loading.png"
             alt="Auto"
             style={{
-              maxWidth: "100%",
-              maxHeight: "100%",
-              width: "auto",
-              height: "auto",
+              width: "100%",
+              height: "100%",
               objectFit: "contain",
+              objectPosition: "center bottom",
               filter: "drop-shadow(0 10px 28px rgba(220,38,38,.3))",
               userSelect: "none",
               pointerEvents: "none",
@@ -141,7 +140,7 @@ export default function LoadingScreen() {
 
       {/* Ruta animada */}
       <div style={{
-        width: 400, height: 6,
+        width: "min(560px, 90vw)", height: 6,
         background: "#151515",
         borderRadius: 3,
         overflow: "hidden",
