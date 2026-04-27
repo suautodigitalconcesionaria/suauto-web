@@ -12,15 +12,15 @@ export default function Hero() {
       {/* Background */}
       <div className="absolute inset-0">
         <Image
-          src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=1920&q=80"
+          src="/header.png"
           alt="Auto premium"
           fill
-          className="object-cover object-center opacity-35"
+          className="object-cover object-center opacity-60"
           priority
         />
         {/* Gradients */}
-        <div className="absolute inset-0 bg-gradient-to-r from-black via-black/75 to-black/20" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/40" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black via-black/60 to-black/10" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/30" />
       </div>
 
       {/* Left accent line */}
