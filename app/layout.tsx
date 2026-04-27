@@ -38,7 +38,7 @@ export default function RootLayout({
     <html lang="es">
       <body className={inter.className}>
         <LoadingScreen />
-        <WelcomeVideo />
+        {/* <WelcomeVideo /> */}{/* TODO: activar cuando esté el video */}
         <Navbar />
         <main>{children}</main>
         <Footer />

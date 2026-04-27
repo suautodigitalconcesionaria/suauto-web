@@ -99,9 +99,12 @@ function normalizeCategory(cat?: string): string {
 
 // ─── Mapeo de registro a Car ──────────────────────────────────────────────────
 
-function mapRecord(record: AirtableRecord, type: 'usado' | 'nuevo' | 'stock'): Car {
+function mapRecord(record: AirtableRecord, type: 'usado' | 'nuevo' | 'stock'): Car | null {
   const f = record.fields
   const images = (f.Fotos ?? []).map(a => a.thumbnails?.large?.url ?? a.url)
+
+  // Sin fotos reales → no mostrar el auto
+  if (images.length === 0) return null
 
   return {
     id: record.id,
@@ -117,7 +120,7 @@ function mapRecord(record: AirtableRecord, type: 'usado' | 'nuevo' | 'stock'): C
     color: f.Color ?? '',
     doors: 4,
     category: normalizeCategory(f.Categoria),
-    images: images.length > 0 ? images : ['https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=800&q=80'],
+    images,
     featured: f.Destacado ?? false,
     description: f.Descripcion ?? '',
     features: [],
@@ -130,9 +133,9 @@ function mapRecord(record: AirtableRecord, type: 'usado' | 'nuevo' | 'stock'): C
 
 export async function getAllCars(): Promise<Car[]> {
   const [usados, nuevos, stock] = await Promise.all([
-    fetchTable('Usados').then(r => r.map(rec => mapRecord(rec, 'usado'))),
-    fetchTable('Nuevos').then(r => r.map(rec => mapRecord(rec, 'nuevo'))),
-    fetchTable('Stock').then(r => r.map(rec => mapRecord(rec, 'stock'))),
+    fetchTable('Usados').then(r => r.map(rec => mapRecord(rec, 'usado')).filter((c): c is Car => c !== null)),
+    fetchTable('Nuevos').then(r => r.map(rec => mapRecord(rec, 'nuevo')).filter((c): c is Car => c !== null)),
+    fetchTable('Stock').then(r => r.map(rec => mapRecord(rec, 'stock')).filter((c): c is Car => c !== null)),
   ])
   return [...usados, ...nuevos, ...stock]
 }

@@ -31,31 +31,60 @@ export default function SearchBar({ cars }: Props) {
     return ["Todos", ...vals]
   }, [cars])
 
-  // Sugerencias de autocompletado: marca + modelo únicos
-  const suggestions = useMemo(() => {
-    const available = cars.filter(c => c.status !== "vendido")
-    const seen = new Set<string>()
-    const result: { label: string; brand: string; model: string }[] = []
-    for (const c of available) {
-      const brandKey = c.brand
-      if (!seen.has(brandKey)) {
-        seen.add(brandKey)
-        result.push({ label: c.brand, brand: c.brand, model: "" })
-      }
-      const modelKey = `${c.brand}|${c.model}`
-      if (!seen.has(modelKey)) {
-        seen.add(modelKey)
-        result.push({ label: `${c.brand} ${c.model}`, brand: c.brand, model: c.model })
-      }
-    }
-    return result
-  }, [cars])
-
+  // Sugerencias de autocompletado
   const filteredSuggestions = useMemo(() => {
     if (!query || query.length < 1) return []
     const q = query.toLowerCase()
-    return suggestions.filter(s => s.label.toLowerCase().includes(q)).slice(0, 7)
-  }, [query, suggestions])
+    const available = cars.filter(c => c.status !== "vendido")
+
+    // Autos que coinciden con la búsqueda
+    const matches = available.filter(c =>
+      c.brand.toLowerCase().includes(q) ||
+      c.model.toLowerCase().includes(q) ||
+      c.version.toLowerCase().includes(q) ||
+      `${c.brand} ${c.model}`.toLowerCase().includes(q)
+    )
+
+    type Suggestion = { searchTerm: string; display: string; sub: string; isGroup: boolean }
+    const result: Suggestion[] = []
+    const seenGroups = new Set<string>()
+
+    for (const c of matches) {
+      const groupKey = `${c.brand}|${c.model}`
+      // ¿Hay más de 1 auto con esta marca+modelo?
+      const siblings = matches.filter(x => x.brand === c.brand && x.model === c.model)
+
+      if (siblings.length > 1 && !seenGroups.has(groupKey)) {
+        seenGroups.add(groupKey)
+        // Primera opción: "Ver todos los Renault Clio"
+        result.push({
+          searchTerm: `${c.brand} ${c.model}`,
+          display: `${c.brand} ${c.model}`,
+          sub: `Ver todos (${siblings.length})`,
+          isGroup: true,
+        })
+        // Después cada versión específica
+        for (const s of siblings) {
+          result.push({
+            searchTerm: `${s.brand} ${s.model} ${s.version}`,
+            display: `${s.model} ${s.version}`,
+            sub: `${s.brand} · ${s.year}`,
+            isGroup: false,
+          })
+        }
+      } else if (siblings.length === 1 && !seenGroups.has(groupKey)) {
+        seenGroups.add(groupKey)
+        result.push({
+          searchTerm: `${c.brand} ${c.model}`,
+          display: `${c.brand} ${c.model}`,
+          sub: c.version,
+          isGroup: false,
+        })
+      }
+    }
+
+    return result.slice(0, 8)
+  }, [query, cars])
 
   // Cerrar sugerencias al hacer click afuera
   useEffect(() => {
@@ -133,16 +162,24 @@ export default function SearchBar({ cars }: Props) {
             {/* Dropdown sugerencias */}
             {showSuggestions && filteredSuggestions.length > 0 && (
               <div className="absolute top-full left-0 right-0 mt-1.5 bg-[#1A1A1A] border border-white/10 rounded-xl overflow-hidden z-50 shadow-xl shadow-black/50">
-                {filteredSuggestions.map((s) => (
+                {filteredSuggestions.map((s, i) => (
                   <button
-                    key={s.label}
-                    onMouseDown={() => handleSelect(s.label)}
-                    className="w-full text-left px-4 py-2.5 text-sm text-gray-300 hover:bg-white/5 hover:text-white transition-colors flex items-center gap-2"
+                    key={i}
+                    onMouseDown={() => handleSelect(s.searchTerm)}
+                    className={`w-full text-left px-4 py-2.5 text-sm hover:bg-white/5 transition-colors flex items-center gap-3 ${
+                      s.isGroup ? "border-b border-white/5" : "pl-8"
+                    }`}
                   >
                     <HiSearch size={13} className="text-gray-500 shrink-0" />
-                    <span>
-                      <span className="text-white font-medium">{s.brand}</span>
-                      {s.model && <span className="text-gray-400"> {s.model}</span>}
+                    <span className="flex flex-col min-w-0">
+                      <span className={`font-medium truncate ${s.isGroup ? "text-white" : "text-gray-300"}`}>
+                        {s.display}
+                      </span>
+                      {s.sub && (
+                        <span className={`text-xs truncate ${s.isGroup ? "text-red-500" : "text-gray-500"}`}>
+                          {s.sub}
+                        </span>
+                      )}
                     </span>
                   </button>
                 ))}
