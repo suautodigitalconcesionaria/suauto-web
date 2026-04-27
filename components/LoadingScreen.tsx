@@ -73,19 +73,19 @@ export default function LoadingScreen() {
       </div>
 
       {/* Escena */}
-      <div style={{ position: "relative", width: 400, height: 140 }}>
+      <div style={{ position: "relative", width: 420, height: 180 }}>
 
-        {/* Líneas de velocidad — salen hacia la DERECHA (trompa izquierda) */}
+        {/* Líneas de velocidad */}
         {([
-          { top: 32, w: 55, dur: .52 },
-          { top: 50, w: 35, dur: .60 },
-          { top: 66, w: 48, dur: .56 },
-          { top: 82, w: 26, dur: .65 },
-          { top: 44, w: 18, dur: .48 },
+          { top: 50, w: 55, dur: .52 },
+          { top: 70, w: 35, dur: .60 },
+          { top: 90, w: 48, dur: .56 },
+          { top: 108, w: 26, dur: .65 },
+          { top: 62, w: 18, dur: .48 },
         ]).map((l, i) => (
           <div key={i} style={{
             position: "absolute",
-            right: 0,          // pegadas al lado derecho (trompa)
+            right: 0,
             top: l.top,
             height: 2, width: l.w,
             background: "linear-gradient(270deg, #dc2626, transparent)",
@@ -95,11 +95,11 @@ export default function LoadingScreen() {
           }} />
         ))}
 
-        {/* Humo de escape — sale por la derecha (cola del auto = lado derecho) */}
+        {/* Humo de escape */}
         {[0, 1, 2, 3].map((i) => (
           <div key={i} style={{
             position: "absolute",
-            right: 48, top: 95,   // esquina trasera del auto
+            right: 48, top: 125,
             width: 10, height: 10,
             borderRadius: "50%",
             background: "rgba(160,160,160,0.5)",
@@ -111,8 +111,9 @@ export default function LoadingScreen() {
         {/* Foto del auto */}
         <div style={{
           position: "absolute", left: 0, top: 0,
-          width: "100%", height: 130,
+          width: "100%", height: "100%",
           animation: "floatCar 2.5s ease-in-out infinite",
+          display: "flex", alignItems: "flex-end", justifyContent: "center",
         }}>
           {/* Resplandor rojo debajo */}
           <div style={{
@@ -125,10 +126,11 @@ export default function LoadingScreen() {
             src="/car-loading.png"
             alt="Auto"
             style={{
-              width: "100%",
-              height: "100%",
+              maxWidth: "100%",
+              maxHeight: "100%",
+              width: "auto",
+              height: "auto",
               objectFit: "contain",
-              objectPosition: "center bottom",
               filter: "drop-shadow(0 10px 28px rgba(220,38,38,.3))",
               userSelect: "none",
               pointerEvents: "none",
