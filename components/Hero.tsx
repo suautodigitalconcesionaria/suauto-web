@@ -33,7 +33,7 @@ export default function Hero() {
       {/* Decorative red circle blur */}
       <div className="absolute top-1/2 -translate-y-1/2 left-1/2 w-96 h-96 bg-red-600/8 rounded-full blur-3xl pointer-events-none" />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 pt-24 pb-20">
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6" style={{ paddingTop: "clamp(80px, 10vh, 120px)", paddingBottom: "clamp(60px, 8vh, 100px)" }}>
         <div className="max-w-2xl">
           {/* Badge */}
           <motion.div
