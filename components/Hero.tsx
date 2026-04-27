@@ -3,8 +3,7 @@
 import { motion } from "framer-motion"
 import Image from "next/image"
 import Link from "next/link"
-import { BsWhatsapp, BsChevronDown } from "react-icons/bs"
-import { whatsappLink } from "@/lib/config"
+import { BsChevronDown } from "react-icons/bs"
 
 export default function Hero() {
   return (
@@ -63,7 +62,7 @@ export default function Hero() {
 
           {/* Subtitle */}
           <motion.p
-            className="hidden sm:block text-lg sm:text-xl text-gray-300 mb-10 leading-relaxed max-w-lg"
+            className="text-lg sm:text-xl text-gray-300 mb-10 leading-relaxed max-w-lg"
             initial={{ opacity: 0, y: 25 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
@@ -72,27 +71,17 @@ export default function Hero() {
             Sin vueltas, sin formularios, sin esperas.
           </motion.p>
 
-          {/* CTAs */}
+          {/* CTA */}
           <motion.div
-            className="flex flex-col sm:flex-row gap-4 mt-8 sm:mt-0"
             initial={{ opacity: 0, y: 25 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.55 }}
           >
-            <a
-              href={whatsappLink("Hola! Quiero consultar sobre un auto. ¿Qué tienen disponible?")}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group flex items-center justify-center gap-3 bg-red-600 hover:bg-red-700 text-white px-8 py-4 rounded-xl text-lg font-bold transition-all hover:shadow-2xl hover:shadow-red-600/40 hover:-translate-y-0.5 active:translate-y-0"
-            >
-              <BsWhatsapp size={22} className="group-hover:scale-110 transition-transform" />
-              Hablanos por WhatsApp
-            </a>
             <Link
               href="/stock"
-              className="flex items-center justify-center bg-white/5 hover:bg-white/10 border border-white/15 hover:border-white/30 text-white px-8 py-4 rounded-xl text-lg font-semibold transition-all backdrop-blur-sm"
+              className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/15 border border-white/20 hover:border-white/35 text-white px-6 py-3 rounded-xl text-base font-semibold transition-all backdrop-blur-sm"
             >
-              Ver autos disponibles
+              Ver autos disponibles →
             </Link>
           </motion.div>
 
