@@ -15,12 +15,12 @@ export default function Hero() {
           src="/header.png"
           alt="Auto premium"
           fill
-          className="object-cover object-center opacity-60"
+          className="object-cover object-center opacity-75"
           priority
         />
         {/* Gradients */}
-        <div className="absolute inset-0 bg-gradient-to-r from-black via-black/60 to-black/10" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/30" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-black/30" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/40" />
       </div>
 
       {/* Left accent line */}
@@ -63,7 +63,7 @@ export default function Hero() {
 
           {/* Subtitle */}
           <motion.p
-            className="text-lg sm:text-xl text-gray-300 mb-10 leading-relaxed max-w-lg"
+            className="hidden sm:block text-lg sm:text-xl text-gray-300 mb-10 leading-relaxed max-w-lg"
             initial={{ opacity: 0, y: 25 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
@@ -74,7 +74,7 @@ export default function Hero() {
 
           {/* CTAs */}
           <motion.div
-            className="flex flex-col sm:flex-row gap-4"
+            className="flex flex-col sm:flex-row gap-4 mt-8 sm:mt-0"
             initial={{ opacity: 0, y: 25 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.55 }}
@@ -98,7 +98,7 @@ export default function Hero() {
 
           {/* Social proof line */}
           <motion.div
-            className="mt-10 flex items-center gap-3"
+            className="hidden sm:flex mt-10 items-center gap-3"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.9 }}
